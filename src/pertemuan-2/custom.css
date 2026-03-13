@@ -1,0 +1,58 @@
+/* Styling untuk keseluruhan halaman */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Gradient lembut agar tidak membosankan */
+    background: linear-gradient(135deg, #fff0f6 0%, #ffdee9 100%);
+    color: #4a4a4a;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Container utama (Card) */
+.card {
+    max-width: 600px;
+    width: 100%;
+    background: white;
+    padding: 30px;
+    border-radius: 20px; /* Lebih bulat agar terlihat modern */
+    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.15); /* Shadow tipis warna pink */
+    border-top: 5px solid #ff85a1; /* Aksen garis di bagian atas */
+}
+
+/* Header utama */
+h1 {
+    color: #ff4d6d;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+/* Paragraf */
+p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+}
+
+/* Garis pemisah */
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #ffb3c1, transparent);
+    margin: 20px 0;
+}
+
+/* Greeting / Footer kecil */
+small {
+    display: block;
+    font-style: italic;
+    text-align: center;
+    color: #ff85a1;
+    margin-top: 15px;
+    font-weight: 500;
+}
