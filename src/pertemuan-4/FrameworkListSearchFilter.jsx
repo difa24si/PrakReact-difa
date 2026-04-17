@@ -2,17 +2,29 @@ import { useState } from "react";
 import frameworkData from "./framework.json";
 
 export default function FrameworkListSearchFilter() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedTag, setSelectedTag] = useState("");
+  const [dataForm, setDataForm] = useState({
+    searchTerm: "",
+    selectedTag: "",
+  });
+
+  const handleChange = (evt) => {
+    const { name, value } = evt.target;
+    setDataForm({
+      ...dataForm,
+      [name]: value,
+    });
+  };
 
   /** Logic Search & Filter **/
   const filteredFrameworks = frameworkData.filter((framework) => {
     const matchesSearch =
-      framework.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      framework.description.toLowerCase().includes(searchTerm.toLowerCase());
+      framework.name.toLowerCase().includes(dataForm.searchTerm.toLowerCase()) ||
+      framework.description
+        .toLowerCase()
+        .includes(dataForm.searchTerm.toLowerCase());
 
-    const matchesTag = selectedTag
-      ? framework.tags.includes(selectedTag)
+    const matchesTag = dataForm.selectedTag
+      ? framework.tags.includes(dataForm.selectedTag)
       : true;
 
     return matchesSearch && matchesTag;
@@ -37,18 +49,18 @@ export default function FrameworkListSearchFilter() {
       <input
         type="text"
         name="searchTerm"
-        value={searchTerm}
+        value={dataForm.searchTerm}
         placeholder="Search framework..."
         className="w-full p-2 border border-gray-300 rounded mb-4"
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={handleChange}
       />
 
       {/* FILTER TAG */}
       <select
         name="selectedTag"
-        value={selectedTag}
+        value={dataForm.selectedTag}
         className="w-full p-2 border border-gray-300 rounded mb-4"
-        onChange={(e) => setSelectedTag(e.target.value)}
+        onChange={handleChange}
       >
         <option value="">All Tags</option>
         {allTags.map((tag, index) => (
@@ -75,7 +87,7 @@ export default function FrameworkListSearchFilter() {
               </p>
 
               <p className="text-gray-500 text-sm mb-3">
-                Developed by:{" "}
+                Developed by{" "}
                 <span className="font-semibold text-pink-600">
                   {item.details.developer}
                 </span>{" "}
