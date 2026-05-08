@@ -1,8 +1,8 @@
 import { useState } from "react";
 import PageHeader from "../components/PageHeader";
-import customers from "../data/customers";
+import orders from "../data/orders";
 
-export default function Customer() {
+export default function Orders() {
 
   const [showForm, setShowForm] = useState(false);
 
@@ -11,14 +11,14 @@ export default function Customer() {
 
       {/* HEADER */}
       <PageHeader
-        title="Customers"
-        breadcrumb="Dashboard / Customers"
+        title="Orders"
+        breadcrumb="Dashboard / Orders"
       >
         <button
           onClick={() => setShowForm(true)}
           className="rounded-lg bg-green-500 px-4 py-2 text-white"
         >
-          Add Customer
+          Add Orders
         </button>
       </PageHeader>
 
@@ -28,14 +28,14 @@ export default function Customer() {
         <div className="mb-6 rounded-xl bg-white p-6 shadow">
 
           <h2 className="mb-4 text-xl font-bold">
-            Add Customer
+            Add Orders
           </h2>
 
           <div className="grid gap-4">
 
             <input
               type="text"
-              placeholder="Customer ID"
+              placeholder="Order ID"
               className="rounded-lg border p-3"
             />
 
@@ -45,28 +45,27 @@ export default function Customer() {
               className="rounded-lg border p-3"
             />
 
-            <input
-              type="email"
-              placeholder="Email"
-              className="rounded-lg border p-3"
-            />
-
-            <input
-              type="text"
-              placeholder="Phone"
-              className="rounded-lg border p-3"
-            />
-
             <select className="rounded-lg border p-3">
 
-              <option>Bronze</option>
-              <option>Silver</option>
-              <option>Gold</option>
+              <option>Pending</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
 
             </select>
 
+            <input
+              type="number"
+              placeholder="Total Price"
+              className="rounded-lg border p-3"
+            />
+
+            <input
+              type="date"
+              className="rounded-lg border p-3"
+            />
+
             <button className="rounded-lg bg-blue-500 px-4 py-2 text-white">
-              Save Customer
+              Save Orders
             </button>
 
           </div>
@@ -74,33 +73,33 @@ export default function Customer() {
       )}
 
       {/* TABLE */}
-      <div className="rounded-xl bg-white p-6 shadow overflow-x-auto">
+      <div className="overflow-x-auto rounded-xl bg-white p-6 shadow">
 
         <table className="w-full">
 
           <thead>
             <tr className="border-b text-left">
 
-              <th className="py-3">Customer ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Loyalty</th>
+              <th className="py-3">Order ID</th>
+              <th>Customer Name</th>
+              <th>Status</th>
+              <th>Total Price</th>
+              <th>Order Date</th>
 
             </tr>
           </thead>
 
           <tbody>
 
-            {customers.map((item) => (
+            {orders.map((item) => (
 
               <tr
-                key={item.customerId}
+                key={item.orderId}
                 className="border-b hover:bg-gray-50"
               >
 
                 <td className="py-3">
-                  {item.customerId}
+                  {item.orderId}
                 </td>
 
                 <td>
@@ -108,15 +107,15 @@ export default function Customer() {
                 </td>
 
                 <td>
-                  {item.email}
+                  {item.status}
                 </td>
 
                 <td>
-                  {item.phone}
+                  Rp {item.totalPrice}
                 </td>
 
                 <td>
-                  {item.loyalty}
+                  {item.orderDate}
                 </td>
 
               </tr>
