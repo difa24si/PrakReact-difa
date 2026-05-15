@@ -1,153 +1,94 @@
-import { useState } from 'react';
-import { orders } from '../data/orders';
-import PageHeader from '../components/PageHeader';
+import React from 'react';
+import { Search, Grid, List, Printer, Download, Filter, Edit, Trash2 } from 'lucide-react';
 
-const paymentCfg = {
-  paid:    { cls: 'badge-success', label: 'Paid' },
-  pending: { cls: 'badge-warning', label: 'Pending' },
-  partial: { cls: 'badge-info',    label: 'Partial' },
-};
-const bookingCfg = {
-  confirmed: { cls: 'badge-success', label: 'Confirmed' },
-  pending:   { cls: 'badge-warning', label: 'Pending' },
-  completed: { cls: 'badge-gray',    label: 'Completed' },
-  cancelled: { cls: 'badge-danger',  label: 'Cancelled' },
-};
-
-export default function Bookings() {
-  const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState('all');
-  const [page, setPage] = useState(1);
-
-  const totalRevenue = orders.filter(o=>o.paymentStatus==='paid').reduce((s,o)=>s+o.amount,0);
-  const pending = orders.filter(o=>o.bookingStatus==='pending').length;
-  const confirmed = orders.filter(o=>o.bookingStatus==='confirmed').length;
-
-  const filtered = orders.filter(o => {
-    const matchS = o.guestName.toLowerCase().includes(search.toLowerCase()) ||
-      o.id.toLowerCase().includes(search.toLowerCase()) ||
-      o.room.includes(search);
-    const matchF = filter === 'all' || o.bookingStatus === filter;
-    return matchS && matchF;
-  });
-
+const Bookings = () => {
   return (
     <div>
-      <PageHeader title="Booking Management" subtitle={`${orders.length} total bookings`}>
-        <button className="btn btn-secondary btn-sm">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-            <polyline points="7,10 12,15 17,10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Export
-        </button>
-        <button className="btn btn-primary btn-sm">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-          </svg>
-          New Booking
-        </button>
-      </PageHeader>
+      <h1 className="text-2xl font-bold text-biru mb-6">John Wick</h1>
 
-      {/* Summary */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '16px', marginBottom: '24px' }}>
-        {[
-          { label: 'Total Revenue', val: `$${totalRevenue.toLocaleString()}`, color: '#c9a84c', bg: 'rgba(201,168,76,0.1)' },
-          { label: 'Confirmed', val: confirmed, color: '#10b981', bg: 'rgba(16,185,129,0.1)' },
-          { label: 'Pending', val: pending, color: '#f59e0b', bg: 'rgba(245,158,11,0.1)' },
-          { label: 'Total Bookings', val: orders.length, color: '#6366f1', bg: 'rgba(99,102,241,0.1)' },
-        ].map(s => (
-          <div key={s.label} className="card" style={{ padding: '18px 20px' }}>
-            <div style={{ fontSize: '22px', fontWeight: 800, color: s.color }}>{s.val}</div>
-            <div style={{ fontSize: '12.5px', color: '#9ca3af', marginTop: '4px' }}>{s.label}</div>
+      {/* Top Search & Filter Bar */}
+      <div className="flex flex-col gap-4 mb-8">
+        <div className="relative w-full">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+          <input 
+            type="text" 
+            placeholder="Search documents..." 
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-garis bg-white outline-none focus:ring-2 focus:ring-biru/20"
+          />
+        </div>
+
+        {/* Action Buttons & Selects */}
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-2 bg-white p-1 rounded-xl border border-garis">
+            <button className="p-2 bg-blue-50 text-biru rounded-lg"><Grid size={18} /></button>
+            <button className="p-2 text-gray-400 hover:bg-gray-50 rounded-lg"><List size={18} /></button>
+            <div className="w-px h-6 bg-garis mx-1"></div>
+            <button className="p-2 text-gray-400 hover:bg-gray-50 rounded-lg"><Printer size={18} /></button>
+            <button className="p-2 text-gray-400 hover:bg-gray-50 rounded-lg"><Download size={18} /></button>
           </div>
-        ))}
+
+          <div className="flex items-center gap-3">
+            <select className="bg-white border border-garis rounded-xl px-4 py-2 text-sm outline-none">
+              <option>Working</option>
+            </select>
+            <select className="bg-white border border-garis rounded-xl px-4 py-2 text-sm outline-none">
+              <option>Archive</option>
+            </select>
+            <button className="bg-biru text-white p-2.5 rounded-xl"><Filter size={18} /></button>
+          </div>
+        </div>
       </div>
 
-      {/* Filters */}
-      <div className="card" style={{ marginBottom: '20px', padding: '14px 20px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <div className="search-bar" style={{ flex: 1 }}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-          <input type="text" placeholder="Search by guest, booking ID, or room..."
-            value={search} onChange={e => setSearch(e.target.value)} />
-        </div>
-        {['all', 'confirmed', 'pending', 'completed'].map(f => (
-          <button key={f} onClick={() => setFilter(f)}
-            className={`btn btn-sm ${filter === f ? 'btn-primary' : 'btn-secondary'}`}
-            style={{ textTransform: 'capitalize' }}>
-            {f === 'all' ? 'All' : f}
-          </button>
-        ))}
-      </div>
+      {/* Booking List Section */}
+      <div className="bg-white p-6 rounded-2xl border border-garis shadow-sm">
+        <h3 className="font-bold text-teks mb-1">Booking List</h3>
+        <p className="text-xs text-teksSamping mb-6">Found your 1 result log list</p>
 
-      {/* Table */}
-      <div className="card">
-        <div className="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Booking ID</th>
-                <th>Guest</th>
-                <th>Room</th>
-                <th>Check-in</th>
-                <th>Check-out</th>
-                <th>Nights</th>
-                <th>Amount</th>
-                <th>Payment</th>
-                <th>Status</th>
-                <th>Source</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map(o => (
-                <tr key={o.id}>
-                  <td style={{ fontFamily: 'monospace', fontSize: '12px', color: '#6366f1', fontWeight: 600 }}>{o.id}</td>
-                  <td>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
-                      <div className="avatar-placeholder" style={{ background: o.color, width: '32px', height: '32px', fontSize: '11px' }}>{o.initials}</div>
-                      <span style={{ fontWeight: 600, fontSize: '13px' }}>{o.guestName}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div style={{ fontWeight: 600, fontSize: '13px' }}>{o.room}</div>
-                    <div style={{ fontSize: '11px', color: '#9ca3af' }}>{o.roomType}</div>
-                  </td>
-                  <td style={{ fontSize: '12.5px', color: '#6b7280' }}>{o.checkIn}</td>
-                  <td style={{ fontSize: '12.5px', color: '#6b7280' }}>{o.checkOut}</td>
-                  <td style={{ textAlign: 'center', fontWeight: 600 }}>{o.nights}</td>
-                  <td style={{ fontWeight: 700, color: '#111827' }}>${o.amount.toLocaleString()}</td>
-                  <td><span className={`badge ${paymentCfg[o.paymentStatus]?.cls}`}>{paymentCfg[o.paymentStatus]?.label}</span></td>
-                  <td><span className={`badge ${bookingCfg[o.bookingStatus]?.cls}`}>{bookingCfg[o.bookingStatus]?.label}</span></td>
-                  <td style={{ fontSize: '12px', color: '#9ca3af' }}>{o.source}</td>
-                  <td>
-                    <div style={{ display: 'flex', gap: '6px' }}>
-                      <button className="btn btn-secondary btn-sm">View</button>
-                      <button className="btn btn-danger btn-sm">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <polyline points="3,6 5,6 21,6"/><path d="M19,6v14a2,2,0,01-2,2H7a2,2,0,01-2-2V6m3,0V4a1,1,0,011-1h4a1,1,0,011,1v2"/>
-                        </svg>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {/* Booking Card Item */}
+        <div className="w-full max-w-sm border border-garis rounded-2xl p-3 shadow-sm">
+          <div className="relative h-48 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070" 
+              className="w-full h-full object-cover" 
+              alt="Blue Origin"
+            />
+            <span className="absolute top-2 right-2 bg-biru text-white text-[10px] px-3 py-1 rounded-full font-bold">
+              $200 per night
+            </span>
+            <div className="absolute bottom-0 left-0 p-3 bg-gradient-to-t from-black/80 to-transparent w-full">
+              <h4 className="text-white font-bold">Blue Origin Fams</h4>
+              <p className="text-white/80 text-[10px]">Gili, Sri Lanka</p>
+            </div>
+          </div>
 
-        <div style={{ padding: '16px 20px', borderTop: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span style={{ fontSize: '13px', color: '#9ca3af' }}>Showing {filtered.length} of {orders.length} bookings</span>
-          <div className="pagination">
-            {[1, 2, 3].map(p => (
-              <button key={p} className={`page-btn ${page === p ? 'active' : ''}`} onClick={() => setPage(p)}>{p}</button>
-            ))}
+          <div className="space-y-3 px-1 text-[11px]">
+            <div className="flex justify-between">
+              <span className="text-teksSamping">14 oct - 16 oct</span>
+            </div>
+            <p className="font-bold text-teks">03 Days</p>
+            <p className="text-teksSamping leading-relaxed">
+              GILI T TRAWANGAN, KODEPOS 83352, Main island, Gili.
+            </p>
+            
+            <div className="pt-2 border-t border-garis flex justify-between items-center">
+              <div>
+                <p className="text-teksSamping font-medium">Initial Payment <span className="text-teks font-bold">$200</span></p>
+                <p className="text-teksSamping font-medium">Total Payment <span className="text-biru font-bold">$400</span></p>
+              </div>
+              <div className="flex gap-2">
+                <button className="p-2 bg-gray-50 rounded-lg text-gray-400 hover:text-biru transition">
+                  <Edit size={14} />
+                </button>
+                <button className="p-2 bg-gray-50 rounded-lg text-gray-400 hover:text-merah transition">
+                  <Trash2 size={14} />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Bookings;
