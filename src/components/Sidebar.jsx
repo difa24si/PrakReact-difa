@@ -51,6 +51,14 @@ export default function Sidebar() {
             Customer
           </NavLink>
         </li>
+
+ <li>
+          <NavLink id="menu-4" to="/product" className={menuClass}>
+            <FiUser className="mr-4 text-xl" />
+           Product
+          </NavLink>
+        </li>
+
         <li>
           <NavLink to="/error400" className={menuClass}>
             Error 400
@@ -62,6 +70,7 @@ export default function Sidebar() {
             Error 401
           </NavLink>
         </li>
+
 
         <li>
           <NavLink to="/error403" className={menuClass}>

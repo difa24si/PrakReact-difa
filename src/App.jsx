@@ -21,20 +21,20 @@ import Loading from "./components/Loading";
 //import Register from "./pages/auth/Register";
 //import Forgot from "./pages/auth/forgot";
 
-
-const Dashboard = React.lazy(() => import("./pages/Dashboard"))
-const Orders = React.lazy(() => import("./pages/Orders"))
-const Customer = React.lazy(() => import("./pages/Customer"))
-const Error400= React.lazy(() => import("./pages/Error400"))
-const Error403= React.lazy(() => import("./pages/Error403"))
-const Error401= React.lazy(() => import("./pages/Error401"))
-const NotFound = React.lazy(() => import("./pages/NotFound"))
-const MainLayout= React.lazy(() => import("./layouts/MainLayout"))
-const AuthLayout= React.lazy(() => import("./layouts/AuthLayout"))
-const Login = React.lazy(() => import("./pages/auth/Login"))
-const Register = React.lazy(() => import("./pages/auth/Register"))
-const Forgot = React.lazy(() => import("./pages/auth/Forgot"))
-
+const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+const Orders = React.lazy(() => import("./pages/Orders"));
+const Customer = React.lazy(() => import("./pages/Customer"));
+const Error400 = React.lazy(() => import("./pages/Error400"));
+const Error403 = React.lazy(() => import("./pages/Error403"));
+const Error401 = React.lazy(() => import("./pages/Error401"));
+const NotFound = React.lazy(() => import("./pages/NotFound"));
+const MainLayout = React.lazy(() => import("./layouts/MainLayout"));
+const AuthLayout = React.lazy(() => import("./layouts/AuthLayout"));
+const Login = React.lazy(() => import("./pages/auth/Login"));
+const Register = React.lazy(() => import("./pages/auth/Register"));
+const Forgot = React.lazy(() => import("./pages/auth/Forgot"));
+const Product = React.lazy(() => import("./pages/Product/"));
+const ProductDetail = React.lazy(() => import("./pages/ProductDetail/"));
 
 function Explore() {
   return <h1 className="text-2xl font-bold">Halaman Explore 🔍</h1>;
@@ -58,35 +58,35 @@ function App() {
 
   return (
     <Suspense fallback={<Loading />}>
-    <Routes>
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/customer" element={<Customer />} />
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/customer" element={<Customer />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
 
-        {/* DUMMY */}
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/detail" element={<OrderDetail />} />
+          <Route path="/product" element={<Product />} />
+          {/* DUMMY */}
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/detail" element={<OrderDetail />} />
 
-        {/* ERROR */}
-        <Route path="/error400" element={<Error400 />} />
-        <Route path="/error401" element={<Error401 />} />
-        <Route path="/error403" element={<Error403 />} />
+          {/* ERROR */}
+          <Route path="/error400" element={<Error400 />} />
+          <Route path="/error401" element={<Error401 />} />
+          <Route path="/error403" element={<Error403 />} />
 
-        {/* NOT FOUND */}
-        <Route path="*" element={<NotFound />} />
-      </Route>
-
-
-       <Route element={<AuthLayout/>}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register/>} />
-            <Route path="/forgot" element={<Forgot/>} />
+          {/* NOT FOUND */}
+          <Route path="*" element={<NotFound />} />
         </Route>
-    </Routes>
-    </Suspense>
 
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot" element={<Forgot />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 
