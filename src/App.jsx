@@ -35,6 +35,8 @@ const Register = React.lazy(() => import("./pages/auth/Register"));
 const Forgot = React.lazy(() => import("./pages/auth/forgot"));
 const Product = React.lazy(() => import("./pages/Product/"));
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail/"));
+const FiturXyz = React.lazy(() => import("./pages/FiturXyz"));
+
 
 function Explore() {
   return <h1 className="text-2xl font-bold">Halaman Explore 🔍</h1>;
@@ -64,6 +66,9 @@ function App() {
           <Route path="/orders" element={<Orders />} />
           <Route path="/customer" element={<Customer />} />
           <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/fitur-xyz" element={<FiturXyz />} />
+
 
           <Route path="/product" element={<Product />} />
           {/* DUMMY */}
