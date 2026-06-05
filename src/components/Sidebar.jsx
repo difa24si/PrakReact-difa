@@ -61,7 +61,7 @@ export default function Sidebar() {
 
          <li>
           <NavLink id="menu-4" to="/fitur-xyz" className={menuClass}>
-            <FiUser className="mr-4 text-xl" />
+           <FiHome className="mr-4 text-xl" />
            Fitur XYZ
           </NavLink>
         </li>
