@@ -33,16 +33,6 @@ export default function Header() {
             </span>
           </div>
 
-          {/* Chat */}
-          <div className="relative">
-            <div className="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-lg">
-              <FiMessageSquare size={18} />
-            </div>
-            <span className="absolute -top-1 -right-1 text-xs bg-blue-500 text-white rounded-full px-1">
-              5
-            </span>
-          </div>
-
           {/* Gift */}
           <div className="relative">
             <div className="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-lg">
