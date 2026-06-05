@@ -57,7 +57,7 @@ export default function Header() {
         {/* USER */}
         <div className="flex items-center gap-2 ml-4">
           <span className="text-sm text-gray-600">
-            Haii, <b>Difa Mardiani</b>
+            Hola, <b>Difa bluu</b>
           </span>
           <img
             src="https://i.pravatar.cc/40"
