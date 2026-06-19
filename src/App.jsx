@@ -36,6 +36,8 @@ const Forgot = React.lazy(() => import("./pages/auth/forgot"));
 const Product = React.lazy(() => import("./pages/Product/"));
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail/"));
 const FiturXyz = React.lazy(() => import("./pages/FiturXyz"));
+const Note = React.lazy(() => import("./pages/Note"));
+
 
 
 function Explore() {
@@ -68,6 +70,7 @@ function App() {
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/fitur-xyz" element={<FiturXyz />} />
+           <Route path="/notes" element={<Note />} />
 
 
           <Route path="/product" element={<Product />} />
@@ -89,6 +92,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot" element={<Forgot />} />
+         
         </Route>
       </Routes>
     </Suspense>

@@ -1,3 +1,4 @@
+import { AiFillBook } from "react-icons/ai";
 import { FiHome, FiList, FiFileText, FiUser } from "react-icons/fi";
 import { MdSpaceDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
@@ -83,6 +84,14 @@ export default function Sidebar() {
           <NavLink to="/error403" className={menuClass}>
             Error 403
           </NavLink>
+        </li>
+
+
+        <li>
+         <NavLink id="menu-4" to="/notes" className={menuClass}>
+          <AiFillBook className="mr-4 text-xl" />
+            Note
+        </NavLink>
         </li>
       </ul>
 
